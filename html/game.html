@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Falling Apples Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #87CEEB; /* Sky blue background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .game-container {
+            position: relative;
+            width: 400px;
+            height: 600px;
+            background-color: #4CAF50; /* Ground color */
+            border: 4px solid #000;
+            overflow: hidden;
+        }
+
+        .tree {
+            position: absolute;
+            width: 50px;
+            height: 100%; /* Tree trunk extends to top of the screen */
+            background-color: #8B4513; /* Tree trunk */
+            bottom: 0;
+        }
+
+        .tree::before {
+            content: '';
+            position: absolute;
+            top: 0; /* Leaves are now at the top of the tree */
+            left: -20px;
+            width: 90px;
+            height: 80px; /* Made the leaves larger */
+            background-color: #228B22; /* Tree leaves */
+            border-radius: 50%;
+        }
+
+        .basket {
+            position: absolute;
+            bottom: 10px;
+            width: 100px; /* Increased from 80px to 100px */
+            height: 20px;
+            background-color: yellow;
+            border-radius: 10px;
+        }
+
+        .block {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            border-radius: 50%;
+        }
+
+        .scoreboard {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: white;
+            font-size: 20px;
+        }
+
+        .highscore {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: white;
+            font-size: 20px;
+        }
+
+        .game-over {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 40px;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <!-- Trees in the background -->
+        <div class="tree" style="left: 20px;"></div>
+        <div class="tree" style="left: 150px;"></div>
+        <div class="tree" style="left: 300px;"></div>
+
+        <!-- Scoreboard -->
+        <div class="scoreboard">Score: 0</div>
+
+        <!-- High Score -->
+        <div class="highscore">High Score: 0</div>
+
+        <!-- The basket (yellow bar) -->
+        <div class="basket" id="basket"></div>
+    </div>
+
+    <script>
+        let gameContainer, basket, scoreboard, highscoreDisplay;
+        let containerWidth, basketWidth, basketPosition;
+        let score = 0;
+        let highScore = 0;
+        let isGameOver = false;
+        let blockCooldown = false; // Ensures only one block falls at a time
+
+        function initializeGame() {
+            gameContainer = document.querySelector('.game-container');
+            basket = document.getElementById('basket');
+            scoreboard = document.querySelector('.scoreboard');
+            highscoreDisplay = document.querySelector('.highscore');
+            containerWidth = gameContainer.offsetWidth;
+            basketWidth = basket.offsetWidth;
+            basketPosition = containerWidth / 2 - basketWidth / 2;
+            score = 0;
+            isGameOver = false;
+
+            // Reset basket position
+            basket.style.left = `${basketPosition}px`;
+            scoreboard.textContent = 'Score: 0';
+
+            // Remove old blocks and game over message
+            document.querySelectorAll('.block').forEach(block => block.remove());
+            document.querySelectorAll('.game-over').forEach(message => message.remove());
+
+            // Start the game loop
+            gameLoop();
+        }
+
+        document.addEventListener('keydown', (event) => {
+            if (isGameOver) return;
+
+            const key = event.key.toLowerCase();
+            if (key === 'a') {
+                basketPosition -= 20; 
+                if (basketPosition < 0) basketPosition = 0; 
+            } else if (key === 'd') {
+                basketPosition += 20; 
+                if (basketPosition > containerWidth - basketWidth) basketPosition = containerWidth - basketWidth;
+            }
+            basket.style.left = `${basketPosition}px`;
+        });
+
+        function createBlock() {
+            if (blockCooldown) return; 
+            blockCooldown = true;
+
+            const block = document.createElement('div');
+            block.classList.add('block');
+            block.style.left = `${Math.random() * (containerWidth - 20)}px`;
+            block.style.top = '0px';
+            gameContainer.appendChild(block);
+
+            setTimeout(() => blockCooldown = false, 1000); 
+            return block;
+        }
+
+        function updateBlocks() {
+            const blocks = document.querySelectorAll('.block');
+            blocks.forEach(block => {
+                if (isGameOver) return;
+
+                const blockTop = parseInt(block.style.top);
+                block.style.top = `${blockTop + 3}px`; 
+
+                const blockLeft = parseInt(block.style.left);
+                const blockRight = blockLeft + 20;
+                const basketLeft = basketPosition;
+                const basketRight = basketPosition + basketWidth;
+
+                if (blockTop >= 580 && blockLeft < basketRight && blockRight > basketLeft) {
+                    block.remove();
+                    score += 1;
+                    scoreboard.textContent = `Score: ${score}`;
+
+                    if (score > highScore) {
+                        highScore = score;
+                        highscoreDisplay.textContent = `High Score: ${highScore}`;
+                    }
+
+                    return;
+                }
+
+                if (blockTop > 580) {
+                    gameOver();
+                    block.remove();
+                }
+            });
+        }
+
+        function gameOver() {
+            if (!isGameOver) {
+                isGameOver = true;
+                const gameOverMessage = document.createElement('div');
+                gameOverMessage.classList.add('game-over');
+                gameOverMessage.textContent = 'You Lose';
+                gameContainer.appendChild(gameOverMessage);
+
+                setTimeout(() => {
+                    initializeGame();
+                }, 3000);
+            }
+        }
+
+        function gameLoop() {
+            if (!isGameOver) {
+                if (Math.random() < 0.02) {
+                    createBlock();
+                }
+                updateBlocks();
+                requestAnimationFrame(gameLoop);
+            }
+        }
+
+        initializeGame();
+    </script>
+
+</body>
+</html>

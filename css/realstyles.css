@@ -12,7 +12,10 @@ h2{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #2C3E50;
 }
-
+ul{
+    font-family: Arial, Helvetica, sans-serif;
+    color: darkslategray;
+}
 
 .nav-box {
     border: 2px solid black;

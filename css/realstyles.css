@@ -1,56 +1,19 @@
-
 /* Centers all headings on the page */
 .body{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
-h1, h2 {
+h1 {
     text-align: center;
     font-family: Georgia, 'Times New Roman', Times, serif;
     color: #2C3E50;
 }
-
-/* Styles the navigation box */
-.nav-box {
-    border: 2px solid black;
-    padding: 20px;
-    margin: 20px auto;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 50%; /* Adjust width as needed */
-    background-color: white;
-}
-
-.nav-box a {
-    text-decoration: none;
-    color: black;
-    font-weight: bold;
-}
-
-.nav-box a:hover {
-    text-decoration: underline;
-}
-
-/* Centers the image below the hero section */
-.centered-image {
-    display: block;
-    margin: 20px auto;
-    max-width: 100%; 
-    height: auto;
-}
-ol li {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-.body{
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-h1, h2 {
+h2{
     text-align: center;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #2C3E50;
 }
 
-/* Styles the navigation box */
+
 .nav-box {
     border: 2px solid black;
     padding: 20px;
@@ -58,7 +21,7 @@ h1, h2 {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    width: 50%; /* Adjust width as needed */
+    width: 50%; 
     background-color: white;
 }
 
@@ -72,44 +35,7 @@ h1, h2 {
     text-decoration: underline;
 }
 
-/* Centers the image below the hero section */
-.centered-image {
-    display: block;
-    margin: 20px auto;
-    max-width: 100%; 
-    height: auto;
-}
-h1, h2 {
-    text-align: center;
-    font-family: 'Georgia', serif; /* Professional serif font for headings */
-    color: #2C3E50; /* Darker shade of blue/gray for headings */
-}
-.body{
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-/* Styles the navigation box */
-.nav-box {
-    border: 2px solid black;
-    padding: 20px;
-    margin: 20px auto;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    width: 50%; /* Adjust width as needed */
-    background-color: white;
-}
 
-.nav-box a {
-    text-decoration: none;
-    color: black;
-    font-weight: bold;
-}
-
-.nav-box a:hover {
-    text-decoration: underline;
-}
-
-/* Centers the image below the hero section */
 .centered-image {
     display: block;
     margin: 20px auto;
@@ -117,33 +43,25 @@ h1, h2 {
     height: auto;
 }
 
-/* Style the first body paragraph */
+
 .lore-content p:first-of-type {
-    color: #555555; /* Dark gray color for first paragraph */
-    font-family: 'Arial', sans-serif; /* Professional sans-serif font */
+    color: #555555; 
+    font-family: 'Arial', sans-serif; 
 }
 
 /* Style for all other body paragraphs */
 p {
-    font-family: 'Verdana', sans-serif; /* Different professional sans-serif font */
-    color: #333333; /* Slightly darker gray for body text */
+    font-family: 'Verdana', sans-serif; 
+    color: #333333; 
 }
 
-/* Additional section headers (like "Abilities", "Strategy", etc.) */
+
 section h2 {
-    font-family: 'Georgia', serif; /* Same font as h1 for consistent header look */
-    color: #2C3E50; /* Same dark blue/gray for consistency */
+    font-family: 'Georgia', serif; 
+    color: #2C3E50; 
 }
 
-/* No changes to your original layout, just adding functionality below */
 
-/* Change font of all body paragraphs and adjust color of the first one */
 body {
-    font-family: 'Verdana', sans-serif; /* Default font for body text */
-}
-
-/* Style for the navigation bar links */
-.nav-box a {
-    color: black;
-    font-weight: bold;
+    font-family: 'Verdana', sans-serif; 
 }
